@@ -43,7 +43,7 @@ class Form {
     player.index = playerCount;
     player.addPlayer();
     //atualização da contagem dos players (playerCount do BD)
-    
+    player.updateCount(playerCount);
   });
   }
 

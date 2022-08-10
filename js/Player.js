@@ -24,7 +24,16 @@ class Player {
   }
 
   //verificar e trazer a informação do playerCount do BD para o VS
-
+  getCount(){
+    var playerCountRef = database.ref("playerCount");
+    playerCountRef.on("value", function(data){
+      playerCount = data.val();
+    });
+  }
   //atualizar o playerCount do banco da dados
-
+  updateCount(count){
+    database.ref("/").update({
+      playerCount: count,
+    });
+  }
 }
