@@ -38,6 +38,12 @@ class Form {
     this.input.hide();
     var message = `Bem vindo ${this.input.value()} </br> Aguarde o próximo jogador`; 
     this.greeting.html(message);
+    playerCount +=1;
+    player.name = this.input.value();
+    player.index = playerCount;
+    player.addPlayer();
+    //atualização da contagem dos players (playerCount do BD)
+    
   });
   }
 
