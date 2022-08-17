@@ -36,4 +36,21 @@ class Player {
       playerCount: count,
     });
   }
-}
+
+  //pegar a informação dos players no BD
+  static getPlayersInfo(){
+    var playerInfoRef = database.ref("players");
+    playerInfoRef.on("value", data =>{
+      allPlayers = data.val();
+    })
+  }
+
+  //atualiza o player
+  update(){
+    var playerIndex = "players/player" + this.index;
+    database.ref(playerIndex).update({
+      positionX : this.positionX,
+      positionY : this.positionY,
+    });
+  }
+}//classe
