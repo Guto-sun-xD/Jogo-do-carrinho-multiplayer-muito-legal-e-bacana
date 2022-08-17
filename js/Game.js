@@ -37,13 +37,21 @@ class Game {
       for (var plr in allPlayers){
         index = index + 1;
         
+        
+
         var x = allPlayers[plr].positionX;
         var y = height - allPlayers[plr].positionY;
 
         carros[index-1].position.x = x;
         carros[index-1].position.y = y;
+ 
+       if(index == player.index){
+        camera.position.y = carros[index-1].position.y
+       }
 
       }
+
+      
 
       this.playerControl();
       drawSprites();
