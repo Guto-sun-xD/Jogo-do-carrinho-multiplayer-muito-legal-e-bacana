@@ -4,6 +4,8 @@ class Player {
     this.index = null,
     this.positionX = 0;
     this.positionY = 0;
+    this.ranking = 0;
+    this.score = 0;
   }
 
   //adicionar um novo player ao banco de dados
@@ -20,6 +22,8 @@ class Player {
       name: this.name,
       positionX: this.positionX,
       positionY: this.positionY,
+      ranking: this.ranking,
+      score: this.score,    
     });
   }
 
@@ -51,6 +55,8 @@ class Player {
     database.ref(playerIndex).update({
       positionX : this.positionX,
       positionY : this.positionY,
+      ranking: this.ranking,
+      score: this.score,
     });
   }
 

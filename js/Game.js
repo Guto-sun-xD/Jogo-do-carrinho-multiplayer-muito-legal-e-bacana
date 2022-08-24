@@ -2,6 +2,9 @@ class Game {
   constructor() {
     this.resetButton = createButton("");
     this.resetTitle = createElement("h2");
+    this.leaderboardTitle = createElement("h2")
+    this.leader1 = createElement("h2");
+    this.leader2 = createElement("h2");
   }
 
   //tela inicial do jogo
@@ -37,6 +40,15 @@ class Game {
     this.resetButton.position(width/2 + 230,100);
     //this.resetButton.html("Restart");
 
+    this.leaderboardTitle.class("resetText");
+    this.leaderboardTitle.position(width/3 - 60,40);
+    this.leaderboardTitle.html("Placar");
+
+    this.leader1.class("resetText");
+    this.leader1.position(width/3 - 60,90);
+   
+    this.leader2.class("resetText");
+    this.leader2.position(width/3 - 60,130);
   }
 
   //função de restart
@@ -59,6 +71,8 @@ class Game {
 
     if(allPlayers != undefined){
       image(pistaImg,0,-height*5, width, height*6);
+     
+     this.showLeaderboard();
 
       var index = 0;
       for (var plr in allPlayers){
@@ -112,4 +126,45 @@ class Game {
     player.update();
   }
  }
+  showLeaderboard(){
+    var leader1,leader2;
+    var players = Object.values(allPlayers);
+    if((players[0].ranking == 0 && players[1].ranking == 0) || players[0].ranking == 1){
+    
+      leader1 = 
+    players[0].ranking +
+    "&emsp;" + 
+    players[0].name + 
+    "&emsp;" +
+    players[0].score;
+
+    leader2 = 
+    players[1].ranking +
+    "&emsp;" + 
+    players[1].name + 
+    "&emsp;" +
+    players[1].score;
+    }
+    if(players[1].ranking == 1){
+      leader2 = 
+    players[0].ranking +
+    "&emsp;" + 
+    players[0].name + 
+    "&emsp;" +
+    players[0].score;
+
+    leader1 = 
+    players[1].ranking +
+    "&emsp;" + 
+    players[1].name + 
+    "&emsp;" +
+    players[1].score;
+    }
+  
+    this.leader1.html(leader1);
+    this.leader2.html(leader2);
+  
+  }
+  
+    
 }//classe
