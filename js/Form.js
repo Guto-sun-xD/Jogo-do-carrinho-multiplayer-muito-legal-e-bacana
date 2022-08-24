@@ -44,6 +44,7 @@ class Form {
     player.addPlayer();
     //atualização da contagem dos players (playerCount do BD)
     player.updateCount(playerCount);
+    player.getDistance();
   });
   }
 

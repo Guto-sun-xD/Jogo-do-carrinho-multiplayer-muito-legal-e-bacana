@@ -1,5 +1,8 @@
 class Game {
-  constructor() {}
+  constructor() {
+    this.resetButton = createButton("");
+    this.resetTitle = createElement("h2");
+  }
 
   //tela inicial do jogo
   start() {
@@ -24,11 +27,35 @@ class Game {
     form.hide();
     form.titleImg.position(40,50);
     form.titleImg.class("gameTitleAfterEffect");
+
+    //botão de reset
+    this.resetTitle.class("resetText");
+    this.resetTitle.position(width/2 + 230,40);
+    this.resetTitle.html("Restart");
+
+    this.resetButton.class("resetButton");
+    this.resetButton.position(width/2 + 230,100);
+    //this.resetButton.html("Restart");
+
   }
+
+  //função de restart
+  restartButton(){
+    this.resetButton.mousePressed(()=>{
+      database.ref("/").set({
+        playerCount: 0,
+        gameState: 0,
+        players: {},
+      });
+      window.location.reload();
+    });
+  }//reset
+
   //função para funcionamento do jogo 
   play(){
     this.handleElements();
     Player.getPlayersInfo();
+    this. restartButton();
 
     if(allPlayers != undefined){
       image(pistaImg,0,-height*5, width, height*6);
@@ -37,16 +64,21 @@ class Game {
       for (var plr in allPlayers){
         index = index + 1;
         
-        
-
+      
         var x = allPlayers[plr].positionX;
         var y = height - allPlayers[plr].positionY;
 
         carros[index-1].position.x = x;
         carros[index-1].position.y = y;
  
-       if(index == player.index){
-        camera.position.y = carros[index-1].position.y
+
+       if(index == player.index){ //comandos aplicados a cada jogador
+        //camera do jogo para cada carro
+        camera.position.y = carros[index-1].position.y;
+        //marcação do carro
+        stroke(10);
+        fill("red");
+        ellipse(x,y,60);
        }
 
       }

@@ -12,7 +12,7 @@ function preload() {
   backgroundImage = loadImage("./assets/planodefundo.png");
   carro1Img = loadImage("./assets/car1.png");
   carro2Img = loadImage("./assets/car2.png");
-  pistaImg = loadImage("./assets/PISTA.png");
+  pistaImg = loadImage("./assets/track2.jpg");
 }
 
 function setup() {

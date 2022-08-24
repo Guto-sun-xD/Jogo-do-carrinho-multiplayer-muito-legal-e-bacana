@@ -53,4 +53,14 @@ class Player {
       positionY : this.positionY,
     });
   }
+
+  //pegar a distância percorrida
+  getDistance(){
+    var playerDistanceRef = database.ref("players/player" + this.index);
+    playerDistanceRef.on("value", function(data){
+      var data = data.val();
+      this.positionX = data.positionX;
+      this.positionY = data.positionY;
+    });
+  }
 }//classe
