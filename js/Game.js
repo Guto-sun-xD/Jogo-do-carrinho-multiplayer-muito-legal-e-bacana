@@ -27,10 +27,24 @@ class Game {
     //criação dos grupos
     fuels = new Group();
     powerCoins = new Group();
+    obstacles = new Group();
+    var obstaclesPositions = [ { x: width / 2 + 250, y: height - 800, image: obstacles2Img},
+     { x: width / 2 - 150, y: height - 1300, image: obstacles1Img },
+      { x: width / 2 + 250, y: height - 1800, image: obstacles1Img },
+       { x: width / 2 - 180, y: height - 2300, image: obstacles2Img },
+        { x: width / 2, y: height - 2800, image: obstacles2Img },
+         { x: width / 2 - 180, y: height - 3300, image: obstacles1Img },
+          { x: width / 2 + 180, y: height - 3300, image: obstacles2Img },
+           { x: width / 2 + 250, y: height - 3800, image: obstacles2Img },
+            { x: width / 2 - 150, y: height - 4300, image: obstacles1Img },
+             { x: width / 2 + 250, y: height - 4800, image: obstacles2Img },
+              { x: width / 2, y: height - 5300, image: obstacles1Img },
+               { x: width / 2 - 180, y: height - 5500, image: obstacles2Img } ];
 
     //adição dos sprites
     this.addSprites(fuels,11,fuelImg,0.02);
     this.addSprites(powerCoins,13,powerCoinsImg,0.09);
+    this.addSprites(obstacles,obstaclesPositions.length,obstacles1Img,0.04,obstaclesPositions);
   }
 
   //função que lida com os elementos da tela
@@ -173,13 +187,22 @@ class Game {
   }
   
   //criar os sprites de combustível, moeda e obstáculos
-  addSprites(spriteGroup, numberOfSprites, spriteImage, scale){
+  addSprites(spriteGroup, numberOfSprites, spriteImage, scale, positions= []){
     for(var i=0; i<numberOfSprites; i++){
 
       var x, y;
 
-      x = random(width/2 -150, width + 150);
-      y = random(-height*4.5, height - 400);
+      if(positions.length>0){
+      x = positions[i].x;
+      y = positions[i].y;
+      spriteImage = positions[i].image
+
+
+      }
+      else{
+        x = random(width/2 -150, width + 150);
+        y = random(-height*4.5, height - 400);
+      }
       
       var sprite = createSprite(x,y);
       sprite.addImage(spriteImage);

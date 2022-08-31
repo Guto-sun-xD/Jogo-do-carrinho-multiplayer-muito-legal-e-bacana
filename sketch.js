@@ -8,6 +8,7 @@ var allPlayers;
 var carro1,carro2, carro1Img, carro2Img, pistaImg;
 var carros = [];
 var fuelImg, powerCoinsImg, fuels, powerCoins;
+var obstacles, obstacles1Img, obstacles2Img;
 
 function preload() {
   backgroundImage = loadImage("./assets/planodefundo.png");
@@ -16,6 +17,8 @@ function preload() {
   pistaImg = loadImage("./assets/track2.jpg");
   fuelImg = loadImage("./assets/fuel.png");
   powerCoinsImg = loadImage("./assets/goldCoin.png");
+  obstacles1Img = loadImage("./assets/obstacle1.png");
+  obstacles2Img = loadImage("./assets/obstacle2.png");
 }
 
 function setup() {
