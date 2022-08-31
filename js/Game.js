@@ -23,6 +23,14 @@ class Game {
 
     carros = [carro1,carro2];
     // i         0     1
+
+    //criação dos grupos
+    fuels = new Group();
+    powerCoins = new Group();
+
+    //adição dos sprites
+    this.addSprites(fuels,11,fuelImg,0.02);
+    this.addSprites(powerCoins,13,powerCoinsImg,0.09);
   }
 
   //função que lida com os elementos da tela
@@ -97,8 +105,6 @@ class Game {
 
       }
 
-      
-
       this.playerControl();
       drawSprites();
     }
@@ -166,5 +172,22 @@ class Game {
   
   }
   
+  //criar os sprites de combustível, moeda e obstáculos
+  addSprites(spriteGroup, numberOfSprites, spriteImage, scale){
+    for(var i=0; i<numberOfSprites; i++){
+
+      var x, y;
+
+      x = random(width/2 -150, width + 150);
+      y = random(-height*4.5, height - 400);
+      
+      var sprite = createSprite(x,y);
+      sprite.addImage(spriteImage);
+
+      sprite.scale = scale;
+      spriteGroup.add(sprite);
+
+    }
+  }
     
 }//classe
