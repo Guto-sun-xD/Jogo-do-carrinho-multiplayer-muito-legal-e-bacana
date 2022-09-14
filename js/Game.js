@@ -77,6 +77,7 @@ class Game {
   restartButton(){
     this.resetButton.mousePressed(()=>{
       database.ref("/").set({
+        carsAtEnd: 0,
         playerCount: 0,
         gameState: 0,
         players: {},
@@ -89,7 +90,8 @@ class Game {
   play(){
     this.handleElements();
     Player.getPlayersInfo();
-    this. restartButton();
+    this.restartButton();
+    player.getCarsAtEnd();
 
     if(allPlayers != undefined){
       image(pistaImg,0,-height*5, width, height*6);
@@ -107,7 +109,6 @@ class Game {
         carros[index-1].position.x = x;
         carros[index-1].position.y = y;
  
-
        if(index == player.index){ //comandos aplicados a cada jogador
         //camera do jogo para cada carro
         camera.position.y = carros[index-1].position.y;
@@ -115,11 +116,25 @@ class Game {
         stroke(10);
         fill("red");
         ellipse(x,y,60);
+
+        this.handleFuels(index);
+        this.handlePowerCoins(index);
        }
 
       }
 
       this.playerControl();
+
+      //linha de chegada
+      const finishLine = height*6 - 100;
+
+      if(player.positionY > finishLine){
+        gameState = 2;
+        player.rank +=1;
+        Player.updateCarsAtEnd(player.rank);
+        player.update();
+        this.showRank();
+      }
       drawSprites();
     }
    
@@ -212,5 +227,34 @@ class Game {
 
     }
   }
-    
+
+  //pegando os combustíveis
+  handleFuels(index){
+    carros[index-1].overlap(fuels, function(collector,collected){
+      player.fuel += 40;
+      collected.remove();
+      player.update();
+    })
+  }
+  
+  //pegando as moedas
+  handlePowerCoins(index){
+    carros[index-1].overlap(powerCoins, function(collector,collected){
+      player.score += 1;
+      collected.remove();
+      player.update();
+    })
+  }
+
+  //aviso de chegada
+  showRank(){
+    swal({
+      title: `Incrível, ${"\n"}Rank${"\n"}${player.rank}`,
+      text: "Você alcançou a linha de chegada",
+      imageUrl: 
+      "https://raw.githubusercontent.com/vishalgaddam873/p5-multiplayer-car-race-game/master/assets/cup.png",
+      imageSize: "100x100",
+      confirmButtonText: "Ok",
+    })
+  }
 }//classe

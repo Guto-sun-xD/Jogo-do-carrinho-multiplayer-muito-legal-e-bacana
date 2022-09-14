@@ -6,6 +6,9 @@ class Player {
     this.positionY = 0;
     this.ranking = 0;
     this.score = 0;
+    this.fuel = 185;
+    this.life = 185;
+    this.rank = 0;
   }
 
   //adicionar um novo player ao banco de dados
@@ -23,7 +26,10 @@ class Player {
       positionX: this.positionX,
       positionY: this.positionY,
       ranking: this.ranking,
-      score: this.score,    
+      score: this.score, 
+      fuel: this.fuel,
+      life: this.life,   
+      rank: this.rank,
     });
   }
 
@@ -57,6 +63,9 @@ class Player {
       positionY : this.positionY,
       ranking: this.ranking,
       score: this.score,
+      fuel: this.fuel,
+      life: this.life,
+      rank: this.rank,
     });
   }
 
@@ -67,6 +76,20 @@ class Player {
       var data = data.val();
       this.positionX = data.positionX;
       this.positionY = data.positionY;
+    });
+  }
+
+  //atualiza o ranking no VSCode
+  getCarsAtEnd(){
+    database.ref("carsAtEnd").on("value",data=>{
+      this.rank = data.val();
+    });
+  }
+
+  //atualiza o BD
+  static updateCarsAtEnd(rank){
+    database.ref("/").update({
+      carsAtEnd: rank,
     });
   }
 }//classe
