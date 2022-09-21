@@ -5,6 +5,8 @@ class Game {
     this.leaderboardTitle = createElement("h2")
     this.leader1 = createElement("h2");
     this.leader2 = createElement("h2");
+    this.driving = false;
+    this.leftKeyActive = false;
   }
 
   //tela inicial do jogo
@@ -95,9 +97,10 @@ class Game {
 
     if(allPlayers != undefined){
       image(pistaImg,0,-height*5, width, height*6);
+      this.lifeBar();
+      this.fuelBar();
+      this.showLeaderboard();
      
-     this.showLeaderboard();
-
       var index = 0;
       for (var plr in allPlayers){
         index = index + 1;
@@ -116,7 +119,8 @@ class Game {
         stroke(10);
         fill("red");
         ellipse(x,y,60);
-
+        this.handleCars(index);
+        this.handleObs(index);
         this.handleFuels(index);
         this.handlePowerCoins(index);
        }
@@ -159,7 +163,19 @@ class Game {
   if(keyDown("w")){
     player.positionY += 10;
     player.update();
+    this.driving = true;
   }
+  if(keyDown("a") && player.positionX > width/2 - 350){
+    player.positionX -= 10
+    player.update();
+    this.leftKeyActive = true;
+  }
+  if(keyDown("d") && player.positionX < width/2 + 350 ){
+    player.positionX += 10
+    player.update();
+    this.leftKeyActive = false;
+  }
+
  }
   showLeaderboard(){
     var leader1,leader2;
@@ -234,7 +250,15 @@ class Game {
       player.fuel += 40;
       collected.remove();
       player.update();
-    })
+     })
+    if(player.fuel <= 0){
+    this.gameOver();
+    gameState = 2;
+    }
+   if(player.fuel > 0 && this.driving){
+    player.fuel -= 0.5;
+   }
+  
   }
   
   //pegando as moedas
@@ -257,4 +281,83 @@ class Game {
       confirmButtonText: "Ok",
     })
   }
+
+ gameOver(){
+  swal({
+    title: `Fim de Jogo, ${"\n"}Rank${"\n"}${player.rank}`,
+      text: "Você perdeu :(",
+      imageUrl: 
+      "https://cdn.shopify.com/s/files/1/1061/1924/products/Thumbs_Down_Sign_Emoji_Icon_ios10_grande.png",
+      imageSize: "100x100",
+      confirmButtonText: "Ok",
+  })
+ }
+
+ lifeBar(){
+  push()
+  image(lifeImg,width/2 - 130,height - player.positionY - 400,25,25);
+  fill("white");
+  rect(width/2 - 100,height - player.positionY - 400,185,25);
+  fill("red");
+  rect(width/2 - 100,height - player.positionY - 400,player.life,25);
+  pop()
+ }
+
+ fuelBar(){
+  push()
+  image(fuelImg,width/2 - 130,height - player.positionY - 300,25,25);
+  fill("white");
+  rect(width/2 - 100,height - player.positionY - 300,185,25);
+  fill("orange");
+  rect(width/2 - 100,height - player.positionY - 300,player.fuel,25);
+  pop()
+ }
+
+ handleObs(index){
+ if(carros[index-1].collide(obstacles)){
+    if(this.leftKeyActive){
+      player.positionX += 100;
+    }
+    else{
+      player.positionX -= 100;
+    }
+    if(player.life > 0){
+      player.life -= 40;
+    }
+    player.update();
+   }
+}
+
+handleCars(index){
+  if(index == 1){
+  if(carros[index-1].collide(carros[1])){
+     if(this.leftKeyActive){
+       player.positionX += 100;
+     }
+     else{
+       player.positionX -= 100;
+     }
+     if(player.life > 0){
+       player.life -= 40;
+     }
+     player.update();
+    }
+  }
+  if(index == 2){
+    if(carros[index-1].collide(carros[0])){
+       if(this.leftKeyActive){
+         player.positionX += 100;
+       }
+       else{
+         player.positionX -= 100;
+       }
+       if(player.life > 0){
+         player.life -= 40;
+       }
+       player.update();
+      }
+    }
+  }
+
 }//classe
+
