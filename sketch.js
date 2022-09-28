@@ -10,6 +10,7 @@ var carros = [];
 var fuelImg, powerCoinsImg, fuels, powerCoins;
 var obstacles, obstacles1Img, obstacles2Img;
 var lifeImg;
+var explosion
 
 function preload() {
   backgroundImage = loadImage("./assets/planodefundo.png");
@@ -20,6 +21,7 @@ function preload() {
   powerCoinsImg = loadImage("./assets/goldCoin.png");
   obstacles1Img = loadImage("./assets/obstacle1.png");
   obstacles2Img = loadImage("./assets/obstacle2.png");
+  explosion = loadImage("./assets/blast.png");
   lifeImg = loadImage("./assets/life.png");
 }
 
@@ -39,6 +41,9 @@ function draw() {
   }
   if(gameState == 1 ){
     game.play();
+  }
+  if(gameState == 2 ){
+    game.end();
   }
 }
 

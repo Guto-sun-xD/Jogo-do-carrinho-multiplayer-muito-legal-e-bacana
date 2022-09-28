@@ -7,6 +7,7 @@ class Game {
     this.leader2 = createElement("h2");
     this.driving = false;
     this.leftKeyActive = false;
+    this.blast = false;
   }
 
   //tela inicial do jogo
@@ -22,7 +23,9 @@ class Game {
     carro2 = createSprite(width/2 + 100, height -100 );
     carro2.addImage("carro1",carro2Img);
     carro2.scale = 0.07;
-
+    carro1.addImage("explosao",explosion);
+    carro2.addImage("explosao",explosion);
+    
     carros = [carro1,carro2];
     // i         0     1
 
@@ -112,6 +115,12 @@ class Game {
         carros[index-1].position.x = x;
         carros[index-1].position.y = y;
  
+        var currentLife = allPlayers[plr].life;
+        if(currentLife <= 0){
+          carros[index-1].changeImage("explosao")
+          carros[index-1].scale = 0.3
+        }
+
        if(index == player.index){ //comandos aplicados a cada jogador
         //camera do jogo para cada carro
         camera.position.y = carros[index-1].position.y;
@@ -123,7 +132,11 @@ class Game {
         this.handleObs(index);
         this.handleFuels(index);
         this.handlePowerCoins(index);
-       }
+        if(player.life<=0){
+          this.blast = true;
+          this.driving = false;
+        } 
+      }
 
       }
 
@@ -139,6 +152,9 @@ class Game {
         player.update();
         this.showRank();
       }
+
+
+
       drawSprites();
     }
    
@@ -160,6 +176,7 @@ class Game {
 
  //mover os carros
  playerControl(){
+  if(!this.blast){
   if(keyDown("w")){
     player.positionY += 10;
     player.update();
@@ -174,8 +191,8 @@ class Game {
     player.positionX += 10
     player.update();
     this.leftKeyActive = false;
+   }
   }
-
  }
   showLeaderboard(){
     var leader1,leader2;
@@ -357,6 +374,10 @@ handleCars(index){
        player.update();
       }
     }
+  }
+
+  end(){
+    console.log("gameOver");
   }
 
 }//classe
